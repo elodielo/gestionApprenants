@@ -14,6 +14,10 @@ switch($route) {
     case HOME_URL: 
     $HomeController->affichePageAccueil();
     break;
+    
+    case HOME_URL.'mon-routeur':
+    $UtilisateurController->traiterForm();
+    break;
 
     default:
     $HomeController->page404();
