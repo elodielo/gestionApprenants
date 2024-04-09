@@ -1,8 +1,10 @@
 <?php
 
 use src\Controllers\HomeController;
+use src\Controllers\UtilisateurController;
 
 $HomeController = new HomeController;
+$UtilisateurController = new UtilisateurController;
 
 
 
@@ -14,9 +16,13 @@ switch($route) {
     case HOME_URL: 
     $HomeController->affichePageAccueil();
     break;
+
+    case HOME_URL.'creation':
+    $HomeController->affichePageCreation();
+    break;
     
-    case HOME_URL.'mon-routeur':
-    $UtilisateurController->traiterForm();
+    case HOME_URL.'connexion':
+        $UtilisateurController->traiterForm();
     break;
 
     default:

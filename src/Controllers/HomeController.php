@@ -18,6 +18,12 @@ class HomeController
     exit();
   }
 
+  public function affichePageCreation()
+  {
+    $this->render("creationMdp");
+    exit();
+  }
+
 //   public function affichePageConnexion()
 //   {
 //     $this->render("connexion");

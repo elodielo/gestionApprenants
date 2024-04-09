@@ -56,20 +56,20 @@ class UtilisateurRepository
 
   public function getUtilisateurByMailEtMdp($mail, $mdp)
   {
-    $sql = "SELECT * FROM gest_utilisateur WHERE mail=:mail";
-    $statement = $this->DB->prepare($sql);
-    $statement->execute([':mail' => $mail]);
-
+      $sql = "SELECT * FROM gest_utilisateur WHERE mail=:mail";
+      $statement = $this->DB->prepare($sql);
+      $statement->execute([':mail' => $mail]);
     $utilisateur = $statement->fetch(PDO::FETCH_ASSOC);
-    $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
-    if ($utilisateur) {
-      if (password_verify($mdp, $utilisateur['mdp'])) {
-        return $newUtilisateur;
+      if ($utilisateur) {
+          // if (password_verify($mdp, $utilisateur['mdp'])) {
+            if ($mdp == $utilisateur['mdp']) {
+              $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
+              return $newUtilisateur;
+          } else {
+              return "mot de passe erronne";
+          }
       } else {
-        echo "mot de passe erronne";
+          return "utilisateur inconnu";
       }
-    } else {
-      echo "utilisateur inconnu";
-    }
-  }
-}
+  }}
+  

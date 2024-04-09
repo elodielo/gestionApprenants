@@ -130,4 +130,17 @@ class Utilisateur
 
         return $this;
     }
+
+    public function objectToArray(){
+        $data = [
+            'id' => $this->getId(),
+            'nom' => $this->getNom(),
+            'prenom' => $this->getPrenom(),
+            'mail' => $this->getMail(),
+            'mdp' => $this->getMdp(),
+            'id_role' => $this->getIdRole(),
+        ];
+        return $data;
+    }
+
 }
