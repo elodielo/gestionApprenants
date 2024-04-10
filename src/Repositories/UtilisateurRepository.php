@@ -4,6 +4,7 @@ namespace src\Repositories;
 
 use src\Models\Utilisateur;
 use PDO;
+use PDOException;
 use src\Models\Database;
 
 class UtilisateurRepository
@@ -56,20 +57,23 @@ class UtilisateurRepository
 
   public function getUtilisateurByMailEtMdp($mail, $mdp)
   {
+    try{
       $sql = "SELECT * FROM gest_utilisateur WHERE mail=:mail";
       $statement = $this->DB->prepare($sql);
       $statement->execute([':mail' => $mail]);
     $utilisateur = $statement->fetch(PDO::FETCH_ASSOC);
       if ($utilisateur) {
-          // if (password_verify($mdp, $utilisateur['mdp'])) {
-            if ($mdp == $utilisateur['mdp']) {
+          if (password_verify($mdp, $utilisateur['mdp'])) {
               $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
               return $newUtilisateur;
           } else {
-              return "mot de passe erronne";
+              return false;
           }
       } else {
-          return "utilisateur inconnu";
+          return false;
+      } 
+  }catch (PDOException $e) {
+          echo "Erreur lors de la préparation de la requête : " . $e->getMessage();
       }
-  }}
+}}
   

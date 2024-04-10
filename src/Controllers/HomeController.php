@@ -20,7 +20,7 @@ class HomeController
 
   public function affichePageCreation()
   {
-    $this->render("creationMdp");
+    $this->render("creationApprenant");
     exit();
   }
 
