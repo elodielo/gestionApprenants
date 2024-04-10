@@ -10,14 +10,17 @@ class Cours
     private $heureDebut;
     private $heureFin;
     private $codeCours;
+    private $id_promo;
 
-    public function __construct($id, $dateJour, $heureDebut, $heureFin, $codeCours)
+
+    public function __construct($id, $dateJour, $heureDebut, $heureFin, $codeCours, $id_promo)
     {
         $this->id = $id;
         $this->dateJour = $dateJour;
         $this->heureDebut = $heureDebut;
         $this->heureFin = $heureFin;
         $this->codeCours = $codeCours;
+        $this->id_promo = $id_promo;
     }
 
 
@@ -108,6 +111,24 @@ class Cours
     public function setCodeCours($codeCours): self
     {
         $this->codeCours = $codeCours;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_promo
+     */
+    public function getIdPromo()
+    {
+        return $this->id_promo;
+    }
+
+    /**
+     * Set the value of id_promo
+     */
+    public function setIdPromo($id_promo): self
+    {
+        $this->id_promo = $id_promo;
 
         return $this;
     }

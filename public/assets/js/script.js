@@ -1,6 +1,7 @@
 let formulaireConnexion = document.getElementById("formConnexion");
 let boutonFormulaire =  document.getElementById("boutonSubmit");
 let messageCo = document.getElementById("messageCo");
+let validerPresenceFormateur = document.getElementById("validerPresenceFormateur");
 
 boutonFormulaire.addEventListener("click", function (event) {
   event.preventDefault();
@@ -32,3 +33,16 @@ function soumettreFormulaire() {
     };
 }
 
+if(validerPresenceFormateur)
+{
+    validerPresenceFormateur.addEventListener("click", function (event) {
+        event.preventDefault();
+        validationPresenceFormateur();
+      });
+}
+
+function validationPresenceFormateur()
+{
+    // Envoyer l'id du cours pour pouvoir récupérer le codeCours
+    // CREER REQUETE AJAX - ENVOI SUR ROUTER - AFFICHE VUE AVEC LE CODE
+}
