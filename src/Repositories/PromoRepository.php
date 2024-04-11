@@ -65,4 +65,15 @@ class PromoRepository
     $retour = $statement->fetch(PDO::FETCH_OBJ);
     return $retour;
   }
+
+  public function getPromoByIdCours($idCours)
+  {
+    $sql = "SELECT * FROM `gest_promo` 
+    JOIN gest_cours ON gest_promo.id = gest_cours.id_promo 
+    WHERE gest_cours.id =:id";
+    $statement = $this->DB->prepare($sql);
+    $statement->execute([':id' => $idCours]);
+    $retour = $statement->fetch(PDO::FETCH_OBJ);
+    return $retour;
+  }
 }

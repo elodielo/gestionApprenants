@@ -56,19 +56,14 @@ class UtilisateurController
                 if ($cour->dateJour == $dateActuelleFormatee) {
                   if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
                     $courAct = $cour;
-                    // if($cour->codeCours !== null){
-                    //   $codeCours = $cour->codeCours;
-                    // } else{
-                    //   $coursRepo->ajoutCodeAleatoire($cour->id);
-                    //   // LE RECUPERER MAINTENANT
-                    // }
+ 
                   } else {
-                    // var_dump('pas la bonne heure') ;
+                    // echo ('pas de cours à cette heure') ;
                   }
                 } else {
-                  // Creer un cours selon l'heure actuelle
+                  // echo ('Pas de cours à cette date');
                 }
-              }
+              // }
             }
           } else {
             http_response_code(401);
@@ -107,10 +102,10 @@ class UtilisateurController
         <form id="formValidationCode">
           <div class="mb-3">
             <label for="validationCode" class="form-label">Code*</label>
-            <input type="number" class="form-control" id="validationCode">
+            <input type="number" class="form-control" id="inputValidationCodeApprenant">
           </div>
           <div class="">
-            <button type="submit" id="boutonValidationCode" class="btn btn-primary">Valider la présence</button>
+            <button type="button" id="boutonValidationCodeApprenant" class="btn btn-primary">Valider la présence</button>
           </div>
         </form>
       </div>
@@ -119,6 +114,7 @@ class UtilisateurController
     }
 
     if ($afficherPageFormateur == true) {
+      // var_dump($courAct->codeCours);
       include_once __DIR__ . '/../Views/Includes/header.php';
     ?>
 
@@ -137,12 +133,13 @@ class UtilisateurController
       <div class="d-flex justify-content-between bg-light position-absolute top-50 start-50 translate-middle w-75 p-3">
         <div>
           <h3> <?php echo $promo->nomPromo ?></h3>
-          <p> <?php echo $promo->placesDispos ?></p>
+          <p> <?php echo $promo->placesDispos ?> participants attendus</p>
         </div>
         <div>
-          <p>date</p>
+          <p><?php echo $courAct->dateJour ?></p>
           <button id="validerPresenceFormateur" data-id="<?php echo $courAct->id ?>" type="button" class="btn btn-primary">Valider présence</button>
         </div>
+        
       </div>
 
 
@@ -151,8 +148,9 @@ class UtilisateurController
 
 
 
-  public function creerUtilisateur()
-  {
-    // 
-  }
+  // public function creerUtilisateur()
+  // {
+  //   // 
+  // }
+}
 }

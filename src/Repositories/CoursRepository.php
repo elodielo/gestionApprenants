@@ -64,7 +64,7 @@ class CoursRepository
     return $retour;
   }
 
-  public function ajoutCodeAleatoire($id)
+  public function definitCodeAleatoire($id)
   {
     $sql ="UPDATE gest_cours SET codeCours =:codeCours WHERE id=:id";
     $statement = $this->DB->prepare($sql);
