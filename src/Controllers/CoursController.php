@@ -97,6 +97,7 @@ class CoursController
         $codeTransmis = $data['inputCode'];
 
         $coursRepo = new CoursRepository;
+        $promoRepo = new PromoRepository;
         $cours = $coursRepo->getAllCours();
         $dateActuelle = new DateTime('now', new DateTimeZone('UTC'));
         $dateActuelle->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -113,12 +114,15 @@ class CoursController
             // echo ('Pas de cours à cette date');
           }
       }
+      $promo = $promoRepo->getPromoByIdCours($courAct->id);
 
       if($courAct->codeCours == $codeTransmis ){
-          ?> <h1>Bon code</h1> <?php
-          //ca marche maintenant à changer ce qu'il se passe !! 
+
+        include __DIR__ .'/../Views/ApprenantSignatureReccueillie.php';  
+        // ENREGISTRER LE STATUT DE L'APPRENANT
+        
       } else {
-        ?> <h1>Mauvais Code</h1> <?php
+        // GERER CE QU'IL SE PASSE SI ERREUR DE MOT DE PASSE
       }
 
   }
