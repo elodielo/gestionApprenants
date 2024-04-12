@@ -5,8 +5,10 @@ namespace src\Controllers;
 use DateTime;
 use DateTimeZone;
 use src\Models\Utilisateur;
+use src\Models\UtilisateurCours;
 use src\Repositories\CoursRepository;
 use src\Repositories\PromoRepository;
+use src\Repositories\Utilisateur_coursRepository;
 use src\Repositories\UtilisateurRepository;
 use src\Services\Reponse;
 
@@ -30,7 +32,6 @@ class CoursController
             $dateActuelleFormatee = $dateActuelle->format('Y-m-d');
             $heureFormatee = $dateActuelle->format('H:i:s');
             $promoRepo = new PromoRepository;
-            
             $coursRepo = new CoursRepository;
             $cours = $coursRepo->getAllCours();
             foreach ($cours as $cour) {
@@ -42,7 +43,8 @@ class CoursController
                     
                   } else{
                     $coursRepo->definitCodeAleatoire($cour->id);
-                    $coursRepo->getCodeCoursById($cour->id);
+                   $codeStd = $coursRepo->getCodeCoursById($cour->id);
+                   $codeCours = $codeStd->codeCours;
                   }
                 } else {
                   // echo ('pas de cours à cette heure') ;
@@ -55,34 +57,11 @@ class CoursController
         }
         
         $promo = $promoRepo->getPromoByIdCours($courAct->id);
-        
+        $promos = $promoRepo->getAllPromos();
         // AFFICHE 
   include_once __DIR__ . '/../Views/Includes/header.php';
+  include __DIR__ .'/../Views/formateurAvecCode.php'; 
   ?>
-
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Promotion</a>
-      </li>
-    </ul>
-
-
-    <h2> Cours du jour</h2>
-
-    <div class="d-flex justify-content-between bg-light position-absolute top-50 start-50 translate-middle w-75 p-3">
-      <div>
-        <h3> <?php echo $promo->nomPromo ?></h3>
-        <p> <?php echo $promo->placesDispos ?> attendus</p>
-      </div>
-      <div>
-        <p><?php echo $courAct->dateJour ?></p>
-        <button id="validerPresenceFormateur" data-id="<?php echo $courAct->id ?>" type="button" class="btn btn-primary"><?php echo $codeCours ?></button>
-      </div>
-      
-    </div>
 
 
 <?php }
@@ -95,9 +74,10 @@ class CoursController
       $data = json_decode($json_data, true);
       if ($data !== null) {
         $codeTransmis = $data['inputCode'];
-
+        $utilisateurRepo = new UtilisateurRepository;
         $coursRepo = new CoursRepository;
         $promoRepo = new PromoRepository;
+        $utilisateurCoursRepo = new Utilisateur_coursRepository;
         $cours = $coursRepo->getAllCours();
         $dateActuelle = new DateTime('now', new DateTimeZone('UTC'));
         $dateActuelle->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -113,16 +93,38 @@ class CoursController
           } else {
             // echo ('Pas de cours à cette date');
           }
-      }
-      $promo = $promoRepo->getPromoByIdCours($courAct->id);
+        }
+        $promo = $promoRepo->getPromoByIdCours($courAct->id);
+        if($courAct->codeCours == $codeTransmis ){
+          
+          $idUtilisateurAct = $_SESSION['utilisateur']->getId();
+          include __DIR__ .'/../Views/ApprenantSignatureReccueillie.php';  
+          $utilisateurAct = $utilisateurRepo->getUtilisateurById($idUtilisateurAct);
+          $heureEnregistrement = $heureFormatee;
+$heureEnregistrement = DateTime::createFromFormat('H:i:s', $heureEnregistrement);
+$heureDebutCours = DateTime::createFromFormat('H:i:s', $courAct->heureDebut);
 
-      if($courAct->codeCours == $codeTransmis ){
+if ($heureEnregistrement && $heureDebutCours) {
+    $diff = $heureEnregistrement->diff($heureDebutCours);
 
-        include __DIR__ .'/../Views/ApprenantSignatureReccueillie.php';  
-        // ENREGISTRER LE STATUT DE L'APPRENANT
-        
+    $totalMinutes = ($diff->h * 60) + $diff->i;
+    if ($totalMinutes > 15) {
+        $statut = "retard";
+    } else {
+        $statut = "present";
+    }
+} else {
+    // Gérer le cas où la conversion échoue
+    // Par exemple, si le format de l'heure est incorrect
+    // ou si les valeurs sont null
+    // Vous pouvez afficher un message d'erreur ou prendre une autre action appropriée
+}
+
+          $UtilisateurCours = new UtilisateurCours($idUtilisateurAct, $courAct->id, $statut);
+          $utilisateurCoursRepo->CreerUtilisateurCours($UtilisateurCours);
+
       } else {
-        // GERER CE QU'IL SE PASSE SI ERREUR DE MOT DE PASSE
+        include __DIR__ .'/../Views/entrerCode.php';
       }
 
   }

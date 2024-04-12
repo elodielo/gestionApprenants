@@ -47,6 +47,7 @@ class UtilisateurController
             $idUtilisateur = $utilisateur->getId();
             $promo = $promoRepo->getPromoByIdUtilisateur($idUtilisateur);
             $courAct = null;
+            $promos = $promoRepo->getAllPromos();
 
             if ($utilisateur->getIdRole() == 2) {
               $afficherPageApprenant = true;
@@ -88,69 +89,22 @@ class UtilisateurController
 
 
     if ($afficherPageApprenant == true) {
-      include_once __DIR__ . '/../Views/Includes/header.php'; ?>
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-        </li>
-      </ul>
+      include_once __DIR__ . '/../Views/Includes/header.php'; 
+      include __DIR__ .'/../Views/entrerCode.php';  ?>
 
-      <h2>Cours du jour</h2>
-      <div id="containerCreation" class="w-50 p-3 position-absolute top-50 start-50 translate-middle bg-light">
-        <h3 class="text-center"> <?php echo $promo->nomPromo ?> </h3>
-        <p><?php echo $promo->placesDispos ?> participants attendus</p>
-        <form id="formValidationCode">
-          <div class="mb-3">
-            <label for="validationCode" class="form-label">Code*</label>
-            <input type="number" class="form-control" id="inputValidationCodeApprenant">
-          </div>
-          <div class="">
-            <button type="button" id="boutonValidationCodeApprenant" class="btn btn-primary">Valider la présence</button>
-          </div>
-        </form>
-      </div>
     <?php
 
     }
 
     if ($afficherPageFormateur == true) {
-      // var_dump($courAct->codeCours);
       include_once __DIR__ . '/../Views/Includes/header.php';
+      include __DIR__ .'/../Views/accueilFormateur.php'; 
     ?>
-
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Promotion</a>
-        </li>
-      </ul>
-
-
-      <h2> Cours du jour</h2>
-
-      <div class="d-flex justify-content-between bg-light position-absolute top-50 start-50 translate-middle w-75 p-3">
-        <div>
-          <h3> <?php echo $promo->nomPromo ?></h3>
-          <p> <?php echo $promo->placesDispos ?> participants attendus</p>
-        </div>
-        <div>
-          <p><?php echo $courAct->dateJour ?></p>
-          <button id="validerPresenceFormateur" data-id="<?php echo $courAct->id ?>" type="button" class="btn btn-primary">Valider présence</button>
-        </div>
-        
-      </div>
 
 
 <?php }
   }
 
 
-
-  // public function creerUtilisateur()
-  // {
-  //   // 
-  // }
 }
 }

@@ -34,6 +34,10 @@ function soumettreFormulaire() {
         if(boutonValidationCodeApprenant){
             boutonValidationCodeApprenant.addEventListener("click", validationPresenceApprenant)
         }
+        let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
+        if(boutonAjoutPromo){
+          boutonAjoutPromo.addEventListener("click",affichePageCreationPromo);
+        }
       } else {
         messageCo.innerHTML = "Erreur d'email ou de mot de passe";
       }
@@ -45,7 +49,7 @@ function soumettreFormulaire() {
 function validationPresenceFormateur() {
     let validerPresenceFormateur = document.getElementById("validerPresenceFormateur");
     let IdCours = validerPresenceFormateur.getAttribute('data-id');
-    let xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
   xhr.open("POST", HOME_URL + "validationFormateur", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   let formData = {
@@ -59,6 +63,9 @@ function validationPresenceFormateur() {
         // let response = JSON.parse(xhr.responseText);
         let response = xhr.responseText;
         document.body.innerHTML = response;
+        let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
+        if(boutonAjoutPromo){
+          boutonAjoutPromo.addEventListener("click",affichePageCreationPromo);}
          } else {
       }
     }
@@ -86,4 +93,19 @@ function validationPresenceApprenant(){
           }
         }
       };
+}
+
+function affichePageCreationPromo(){
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', HOME_URL + 'affichePageCreationPromo', true);
+  xhr.send();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+         } else {
+      }
+    }}
+
 }
