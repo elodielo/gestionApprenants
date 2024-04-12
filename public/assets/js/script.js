@@ -104,8 +104,62 @@ function affichePageCreationPromo(){
       if (xhr.status === 200) {
         let response = xhr.responseText;
         document.body.innerHTML = response;
+        let validerCreationPromo = document.getElementById("validerCreationPromo");
+        if(validerCreationPromo){
+          validerCreationPromo.addEventListener("click", creerPromo);
+        }
+        let retourCreationPromo = document.getElementById("retourCreationPromo");
+        if(retourCreationPromo){
+          retourCreationPromo.addEventListener("click", retourPageAccueilFormateur);
+        }
          } else {
       }
     }}
+  }
 
-}
+    function creerPromo()
+    {
+  let nomPromotion = document.getElementById("nomPromotion").value;
+  let dateDebutPromo = document.getElementById("dateDebutPromo").value;
+  let dateFinPromo = document.getElementById("dateFinPromo").value;
+  let placesDisposPromo = document.getElementById("placesDisposPromo").value;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", HOME_URL + "creationPromotion", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let formData = {
+    nomPromotion: nomPromotion,
+    dateDebutPromo:dateDebutPromo,
+    dateFinPromo:dateFinPromo,
+    placesDisposPromo:placesDisposPromo
+  };
+  xhr.send(JSON.stringify(formData));
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // let response = JSON.parse(xhr.responseText);
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+      }
+         } else {
+      }
+    }
+  };
+    
+
+    function retourPageAccueilFormateur()
+    {
+      // let xhr = new XMLHttpRequest();
+      // xhr.open('GET', HOME_URL + 'retourPageAccueilFormateur', true);
+      // xhr.send();
+      // xhr.onreadystatechange = function() {
+      //   if (xhr.readyState === 4) {
+      //     if (xhr.status === 200) {
+      //       let response = xhr.responseText;
+      //       document.body.innerHTML = response;
+      //      } else {
+      //     }
+      //   }}
+    }
+

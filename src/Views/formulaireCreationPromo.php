@@ -5,9 +5,6 @@ include_once __DIR__ . '/Includes/header.php';
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="#">Promotion</a>
   </li>
 </ul>
@@ -34,8 +31,8 @@ include_once __DIR__ . '/Includes/header.php';
     </div>
 
     <div class="d-flex justify-content-between">
-    <button type="submit" class="btn btn-primary"> Retour </button>
-    <button type="submit" class="btn btn-primary"> Sauvegarder </button>
+    <button id="retourCreationPromo" class="btn btn-primary"> Retour </button>
+    <button id="validerCreationPromo" class="btn btn-primary"> Sauvegarder </button>
     </div>
     
   </form>

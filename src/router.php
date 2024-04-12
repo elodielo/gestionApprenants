@@ -41,6 +41,14 @@ switch ($route) {
         $PromoController->affichePageCreationPromo();
         break;
 
+    case HOME_URL . 'retourPageAccueilFormateur':
+        $PromoController->retourPageAccueilFormateur();
+        break;
+    
+    case HOME_URL . 'creationPromotion':
+        $PromoController->creationPromotion();
+        break;
+
 
     default:
         $HomeController->page404();
