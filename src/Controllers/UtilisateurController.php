@@ -110,4 +110,21 @@ public function afficheFormulaireCreationApprenant()
 {
   include __DIR__ .'/../Views/creationApprenant.php'; 
 }
+
+public function sauvegarderApprenant()
+{
+  $json_data = file_get_contents('php://input');
+
+      if (!empty($json_data)) {
+        $data = json_decode($json_data, true);
+        if ($data !== null) {
+          $nomApprenant = $data['nomApprenant'];
+          $prenomApprenant = $data['prenomApprenant'];
+          $mailApprenant = $data['mailApprenant'];
+          // AJOUTER APPRENANT EN BDD
+          // LUI ENVOYER UN MAIL POUR QU'IL CREE UN MDP 
+          // LUI ASSIGNER L'ID DE LA PROMO EN COURS
+
+        }}
+}
 }

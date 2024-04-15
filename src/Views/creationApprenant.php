@@ -3,7 +3,7 @@
 include_once __DIR__ . '/Includes/header.php';
 ?>
 
-
+<!-- 
 <div id="containerConnexion" class="w-50 p-3 position-absolute top-50 start-50 translate-middle bg-light">
   <h2> Création d'un apprenant </h2>
   <form id="formCreationApprenant">
@@ -20,16 +20,16 @@ include_once __DIR__ . '/Includes/header.php';
     <input type="email" class="form-control" id="mailApprenant" aria-describedby="emailHelp">
     </div>
 
-    <button type="submit" class="btn btn-primary"> Sauvegarder </button>
+    <button id="sauvegarderApprenant" class="btn btn-primary"> Sauvegarder </button>
   
     
   </form>
-</div>
+</div> -->
 
 
 
-
-</body>
+<!-- 
+</body> -->
 
 
 
@@ -59,7 +59,7 @@ include_once __DIR__ . '/Includes/header.php';
             <input type="email" class="form-control" id="mailApprenant" aria-describedby="emailHelp">
           </div>
 
-          <button type="submit" class="btn btn-primary"> Sauvegarder </button>
+          <button id="sauvegarderApprenant" class="btn btn-primary"> Sauvegarder </button>
 
 
         </form>

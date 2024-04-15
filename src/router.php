@@ -4,11 +4,13 @@ use src\Controllers\CoursController;
 use src\Controllers\HomeController;
 use src\Controllers\PromoController;
 use src\Controllers\UtilisateurController;
+use src\Models\Database;
 
 $HomeController = new HomeController;
 $UtilisateurController = new UtilisateurController;
 $CoursController = new CoursController;
 $PromoController = new PromoController;
+$DB = new Database;
 
 
 
@@ -62,6 +64,14 @@ switch ($route) {
 
     case HOME_URL . 'afficheFormulaireCreationApprenant':
         $UtilisateurController->afficheFormulaireCreationApprenant();
+        break;
+
+    case HOME_URL . 'sauvegarderApprenant':
+        $UtilisateurController->sauvegarderApprenant();
+        break;
+
+    case HOME_URL. 'database':
+        $DB->initialiserBDD();
         break;
 
     default:

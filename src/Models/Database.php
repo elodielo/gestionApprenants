@@ -39,7 +39,7 @@ final class Database
         }
 
         try {
-            $sql = file_get_contents(__DIR__ . "../Migrations/festival-rempli.sql");
+            $sql = file_get_contents(__DIR__ . "../Migrations/migration.sql");
             $this->DB->query($sql);
 
 
