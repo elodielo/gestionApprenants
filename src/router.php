@@ -47,8 +47,22 @@ switch ($route) {
     
     case HOME_URL . 'creationPromotion':
         $PromoController->creationPromotion();
+        $PromoController->retourPageAccueilFormateur();
         break;
 
+    case HOME_URL . 'afficherPromoChoisie':
+        $PromoController->afficherPromoChoisie();
+        // ENVOI SUR PROMOCONTROLLER POUR AFFICHER LA PROMO ADEQUATE
+        break;
+
+    case HOME_URL . 'supprimerPromoChoisie':
+        $PromoController->supprimerPromoChoisie();
+        $PromoController->retourPageAccueilFormateur();
+        break;
+
+    case HOME_URL . 'afficheFormulaireCreationApprenant':
+        $UtilisateurController->afficheFormulaireCreationApprenant();
+        break;
 
     default:
         $HomeController->page404();

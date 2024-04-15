@@ -104,7 +104,10 @@ class UtilisateurController
 
 <?php }
   }
+}
 
-
+public function afficheFormulaireCreationApprenant()
+{
+  include __DIR__ .'/../Views/creationApprenant.php'; 
 }
 }

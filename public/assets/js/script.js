@@ -25,19 +25,39 @@ function soumettreFormulaire() {
         // let response = JSON.parse(xhr.responseText);
         let response = xhr.responseText;
         document.body.innerHTML = response;
-        let validerPresenceFormateur = document.getElementById( "validerPresenceFormateur" );
-            if(validerPresenceFormateur){
-                validerPresenceFormateur.addEventListener("click", validationPresenceFormateur);
-            }
-        let boutonValidationCodeApprenant = document.getElementById("boutonValidationCodeApprenant");
-        let inputValidationCodeApprenant =document.getElementById("inputValidationCodeApprenant");
-        if(boutonValidationCodeApprenant){
-            boutonValidationCodeApprenant.addEventListener("click", validationPresenceApprenant)
+        let validerPresenceFormateur = document.getElementById(
+          "validerPresenceFormateur"
+        );
+        if (validerPresenceFormateur) {
+          validerPresenceFormateur.addEventListener(
+            "click",
+            validationPresenceFormateur
+          );
+        }
+        let boutonValidationCodeApprenant = document.getElementById(
+          "boutonValidationCodeApprenant"
+        );
+        let inputValidationCodeApprenant = document.getElementById(
+          "inputValidationCodeApprenant"
+        );
+        if (boutonValidationCodeApprenant) {
+          boutonValidationCodeApprenant.addEventListener(
+            "click",
+            validationPresenceApprenant
+          );
         }
         let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
-        if(boutonAjoutPromo){
-          boutonAjoutPromo.addEventListener("click",affichePageCreationPromo);
+        if (boutonAjoutPromo) {
+          boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
         }
+        let boutonsVoirPromo = document.querySelectorAll(".voirPromo");
+        boutonsVoirPromo.forEach(function (boutonVoirPromo) {
+          boutonVoirPromo.addEventListener("click", voirPromo);
+        });
+        let boutonsSupprimerPromo = document.querySelectorAll(".supprimerPromo");
+        boutonsSupprimerPromo.forEach(function (boutonSupprimerPromo) {
+          boutonSupprimerPromo.addEventListener("click", supprimerPromo);
+        });
       } else {
         messageCo.innerHTML = "Erreur d'email ou de mot de passe";
       }
@@ -45,10 +65,11 @@ function soumettreFormulaire() {
   };
 }
 
-
 function validationPresenceFormateur() {
-    let validerPresenceFormateur = document.getElementById("validerPresenceFormateur");
-    let IdCours = validerPresenceFormateur.getAttribute('data-id');
+  let validerPresenceFormateur = document.getElementById(
+    "validerPresenceFormateur"
+  );
+  let IdCours = validerPresenceFormateur.getAttribute("data-id");
   let xhr = new XMLHttpRequest();
   xhr.open("POST", HOME_URL + "validationFormateur", true);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -64,9 +85,20 @@ function validationPresenceFormateur() {
         let response = xhr.responseText;
         document.body.innerHTML = response;
         let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
-        if(boutonAjoutPromo){
-          boutonAjoutPromo.addEventListener("click",affichePageCreationPromo);}
-         } else {
+        if (boutonAjoutPromo) {
+          boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
+        }
+        let boutonsSupprimerPromo = document.querySelectorAll(".supprimerPromo");
+        boutonsSupprimerPromo.forEach(function (boutonSupprimerPromo) {
+          boutonSupprimerPromo.addEventListener("click", supprimerPromo);
+        });
+
+        let boutonsVoirPromo = document.querySelectorAll(".voirPromo");
+        boutonsVoirPromo.forEach(function (boutonVoirPromo) {
+          boutonVoirPromo.addEventListener("click", voirPromo);
+        });
+        
+      } else {
       }
     }
   };
@@ -74,51 +106,61 @@ function validationPresenceFormateur() {
   // CREER REQUETE AJAX - ENVOI SUR ROUTER - AFFICHE VUE AVEC LE CODE
 }
 
-function validationPresenceApprenant(){
-    let inputCode = inputValidationCodeApprenant.value;
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", HOME_URL + "validationApprenant", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    let formData = {
-      inputCode: inputCode,
-    };
-    xhr.send(JSON.stringify(formData));
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            // let response = JSON.parse(xhr.responseText);
-            let response = xhr.responseText;
-            document.body.innerHTML = response;
-             } else {
-          }
-        }
-      };
+function validationPresenceApprenant() {
+  let inputCode = inputValidationCodeApprenant.value;
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", HOME_URL + "validationApprenant", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let formData = {
+    inputCode: inputCode,
+  };
+  xhr.send(JSON.stringify(formData));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // let response = JSON.parse(xhr.responseText);
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+      } else {
+      }
+    }
+  };
 }
 
-function affichePageCreationPromo(){
+function affichePageCreationPromo() {
   let xhr = new XMLHttpRequest();
-  xhr.open('GET', HOME_URL + 'affichePageCreationPromo', true);
+  xhr.open("GET", HOME_URL + "affichePageCreationPromo", true);
   xhr.send();
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         let response = xhr.responseText;
         document.body.innerHTML = response;
-        let validerCreationPromo = document.getElementById("validerCreationPromo");
-        if(validerCreationPromo){
-          validerCreationPromo.addEventListener("click", creerPromo);
+        let validerCreationPromo = document.getElementById(
+          "validerCreationPromo"
+        );
+        if (validerCreationPromo) {
+          validerCreationPromo.addEventListener("click", (e) => {
+            e.preventDefault();
+            creerPromo();
+          });
         }
-        let retourCreationPromo = document.getElementById("retourCreationPromo");
-        if(retourCreationPromo){
-          retourCreationPromo.addEventListener("click", retourPageAccueilFormateur);
+        let retourCreationPromo = document.getElementById(
+          "retourCreationPromo"
+        );
+        if (retourCreationPromo) {
+          retourCreationPromo.addEventListener("click", (e) => {
+            e.preventDefault();
+            retourPageAccueilFormateur();
+          });
         }
-         } else {
+      } else {
       }
-    }}
-  }
+    }
+  };
+}
 
-    function creerPromo()
-    {
+function creerPromo() {
   let nomPromotion = document.getElementById("nomPromotion").value;
   let dateDebutPromo = document.getElementById("dateDebutPromo").value;
   let dateFinPromo = document.getElementById("dateFinPromo").value;
@@ -129,9 +171,9 @@ function affichePageCreationPromo(){
   xhr.setRequestHeader("Content-Type", "application/json");
   let formData = {
     nomPromotion: nomPromotion,
-    dateDebutPromo:dateDebutPromo,
-    dateFinPromo:dateFinPromo,
-    placesDisposPromo:placesDisposPromo
+    dateDebutPromo: dateDebutPromo,
+    dateFinPromo: dateFinPromo,
+    placesDisposPromo: placesDisposPromo,
   };
   xhr.send(JSON.stringify(formData));
 
@@ -142,24 +184,78 @@ function affichePageCreationPromo(){
         let response = xhr.responseText;
         document.body.innerHTML = response;
       }
-         } else {
+    } else {
+    }
+  };
+}
+
+function retourPageAccueilFormateur() {
+  // console.log("ca marche");
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", HOME_URL + "retourPageAccueilFormateur", true);
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+      } else {
       }
     }
   };
-    
+}
 
-    function retourPageAccueilFormateur()
-    {
-      // let xhr = new XMLHttpRequest();
-      // xhr.open('GET', HOME_URL + 'retourPageAccueilFormateur', true);
-      // xhr.send();
-      // xhr.onreadystatechange = function() {
-      //   if (xhr.readyState === 4) {
-      //     if (xhr.status === 200) {
-      //       let response = xhr.responseText;
-      //       document.body.innerHTML = response;
-      //      } else {
-      //     }
-      //   }}
+function voirPromo() {
+  let idDeLaPromoAAfficher = this.getAttribute("data-voir-id");
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", HOME_URL + "afficherPromoChoisie", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let formData = {
+    idDeLaPromoAAfficher: idDeLaPromoAAfficher,
+  };
+  xhr.send(JSON.stringify(formData));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+        let boutonAjoutApprenant = document.getElementById("boutonAjoutApprenant");
+        boutonAjoutApprenant.addEventListener("click", (e) => {
+          e.preventDefault();
+          affichePageCreationApprenant();
+        });
+      }}}
+}
+
+function supprimerPromo()
+{
+  let idDeLaPromoASupprimer = this.getAttribute("data-supprime-id");
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", HOME_URL + "supprimerPromoChoisie", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let formData = {
+    idDeLaPromoASupprimer: idDeLaPromoASupprimer,
+  };
+  xhr.send(JSON.stringify(formData));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;}}
+      }
+}
+
+function affichePageCreationApprenant(){
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", HOME_URL + "afficheFormulaireCreationApprenant", true);
+  xhr.send();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+      } else {
+      }
     }
-
+  };
+}

@@ -76,4 +76,23 @@ class PromoRepository
     $retour = $statement->fetch(PDO::FETCH_OBJ);
     return $retour;
   }
+
+  public function getAllApprenantsByIdPromo($idPromo)
+  {
+    $sql = "SELECT * FROM gest_utilisateur 
+JOIN utilisateur_promo ON gest_utilisateur.id = utilisateur_promo.id_utilisateur 
+JOIN gest_promo ON gest_promo.id = utilisateur_promo.id_promo
+WHERE gest_promo.id = :id";
+    $statement = $this->DB->prepare($sql);
+    $statement->execute([':id' => $idPromo]);
+    $retour = $statement->fetchAll(PDO::FETCH_OBJ);
+    return $retour;
+  }
+
+  public function supprimePromoById($idPromo)
+  {
+    $sql = "DELETE FROM gest_promo WHERE id = :id";
+    $query = $this->DB->prepare($sql);
+    $query->execute(['id' => $idPromo]);
+  }
 }
