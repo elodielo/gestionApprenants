@@ -28,7 +28,7 @@ class UtilisateurRepository
 
   public function CreerUtilisateur(Utilisateur $utilisateur): Utilisateur
   {
-    $sql = "INSERT INTO gest_utilisateur (nom, prenom, mail, id_role) VALUES (:nom, :prenom, :mail, :mdp, :id_role);";
+    $sql = "INSERT INTO gest_utilisateur (nom, prenom, mail, id_role) VALUES (:nom, :prenom, :mail, :id_role);";
 
     $statement = $this->DB->prepare($sql);
 
@@ -36,7 +36,6 @@ class UtilisateurRepository
       ':nom'               => $utilisateur->getNom(),
       ':prenom'       => $utilisateur->getPrenom(),
       ':mail'      => $utilisateur->getMail(),
-      ':mdp'      => $utilisateur->getMdp(),
       ':id_role' => $utilisateur->getIdRole(),
     ]);
 
@@ -53,6 +52,25 @@ class UtilisateurRepository
     $statement->execute([':id' => $id]);
     $retour = $statement->fetch(PDO::FETCH_OBJ);
     return $retour;
+  }
+
+  public function getUtilisateurByMail($mail)
+  {
+    $sql = "SELECT * FROM gest_utilisateur WHERE mail=:mail";
+    $statement = $this->DB->prepare($sql);
+    $statement->execute([':mail' => $mail]);
+    $retour = $statement->fetch(PDO::FETCH_OBJ);
+    return $retour;
+  }
+
+  public function creerMDP($mail, $mdp){
+      $sql ="UPDATE gest_utilisateur SET mdp =:mdp WHERE mail=:mail";
+      $statement = $this->DB->prepare($sql);
+      $statement->execute(
+        [':mdp' => $mdp,
+        ':mail' => $mail]
+      );
+    
   }
 
   public function getUtilisateurByMailEtMdp($mail, $mdp)

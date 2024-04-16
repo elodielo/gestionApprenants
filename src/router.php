@@ -13,8 +13,7 @@ $PromoController = new PromoController;
 $DB = new Database;
 
 
-
-$route = $_SERVER['REDIRECT_URL'];
+$route = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REDIRECT_URL'];
 $methode = $_SERVER['REQUEST_METHOD'];
 
 
@@ -28,7 +27,8 @@ switch ($route) {
         break;
 
     case HOME_URL . 'connexion':
-        $UtilisateurController->traiterForm();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $UtilisateurController->traiterForm();}
         break;
 
     case HOME_URL . 'validationFormateur':
@@ -68,11 +68,22 @@ switch ($route) {
 
     case HOME_URL . 'sauvegarderApprenant':
         $UtilisateurController->sauvegarderApprenant();
+        $PromoController->retourPageAccueilFormateur();
         break;
 
     case HOME_URL. 'database':
         $DB->initialiserBDD();
         break;
+    
+    case HOME_URL . 'creationmdp':
+        $HomeController->affichePageCreationMDP();
+        break;
+    
+       case HOME_URL . 'creerMDP':
+        $UtilisateurController->creerMDP();
+        $HomeController->affichePageAccueil();
+        // BUG QUAND ENSUITE RECONNEXION
+        break;   
 
     default:
         $HomeController->page404();

@@ -17,7 +17,7 @@ include_once __DIR__ . '/Includes/header.php';
     <input type="password" class="form-control" id="mdpCreation2">
   </div>
 <div class="text-center">
-  <button type="submit" id="boutonCreation" class="btn btn-primary">Sauvegarder</button>
+  <button id="boutonCreationMDP" class="btn btn-primary">Sauvegarder</button>
 </div>
 </form>
 </div>

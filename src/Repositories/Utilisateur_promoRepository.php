@@ -6,6 +6,7 @@ use src\Models\Utilisateur;
 use PDO;
 use PDOException;
 use src\Models\Database;
+use src\Models\UtilisateurPromo;
 
 class Utilisateur_promoRepository
 {
@@ -19,31 +20,25 @@ class Utilisateur_promoRepository
   }
 
 
-  public function getAllUtilisateurs()
+  public function getAllUtilisateurs_promos()
   {
-    $sql = "SELECT * FROM gest_utilisateur";
+    $sql = "SELECT * FROM utilisateur_promo";
 
     return  $this->DB->query($sql)->fetchAll(PDO::FETCH_OBJ);
   }
 
-  public function CreerUtilisateur(Utilisateur $utilisateur): Utilisateur
+  public function CreerUtilisateurPromo(UtilisateurPromo $utilisateurPromo): UtilisateurPromo
   {
-    $sql = "INSERT INTO gest_utilisateur (nom, prenom, mail, id_role) VALUES (:nom, :prenom, :mail, :mdp, :id_role);";
+    $sql = "INSERT INTO utilisateur_promo (id_utilisateur, id_promo) VALUES (:id_utilisateur, :id_promo);";
 
     $statement = $this->DB->prepare($sql);
 
     $statement->execute([
-      ':nom'               => $utilisateur->getNom(),
-      ':prenom'       => $utilisateur->getPrenom(),
-      ':mail'      => $utilisateur->getMail(),
-      ':mdp'      => $utilisateur->getMdp(),
-      ':id_role' => $utilisateur->getIdRole(),
+      ':id_utilisateur'       => $utilisateurPromo->getIdUtilisateur(),
+      ':id_promo'       => $utilisateurPromo->getIdPromo(),
     ]);
 
-    $id = $this->DB->lastInsertId();
-    $utilisateur->setId($id);
-
-    return $utilisateur;
+    return $utilisateurPromo;
   }
 
   public function getUtilisateurById($id)

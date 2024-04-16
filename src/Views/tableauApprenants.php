@@ -17,7 +17,7 @@ include_once __DIR__ . '/Includes/header.php';
           <div>
             <h2>Promotion <?php echo $promo->nomPromo ?></h2>
             </div>
-          <button type="button" id="boutonAjoutApprenant" class="btn btn-success">Ajouter apprenant</button>
+          <button type="button" id="boutonAjoutApprenant" data-promo-id = <?php echo $promo->id?> class="btn btn-success">Ajouter apprenant</button>
         </div>
     
         <table class="table">

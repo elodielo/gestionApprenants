@@ -5,8 +5,10 @@ namespace src\Controllers;
 use DateTime;
 use DateTimeZone;
 use src\Models\Utilisateur;
+use src\Models\UtilisateurPromo;
 use src\Repositories\CoursRepository;
 use src\Repositories\PromoRepository;
+use src\Repositories\Utilisateur_promoRepository;
 use src\Repositories\UtilisateurRepository;
 use src\Services\Reponse;
 
@@ -19,7 +21,6 @@ class UtilisateurController
   {
     $afficherPageApprenant = false;
     $afficherPageFormateur = false;
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // A METTRE DANS ROUTER
       $json_data = file_get_contents('php://input');
 
@@ -90,21 +91,15 @@ class UtilisateurController
 
     if ($afficherPageApprenant == true) {
       include_once __DIR__ . '/../Views/Includes/header.php'; 
-      include __DIR__ .'/../Views/entrerCode.php';  ?>
-
-    <?php
-
+      include __DIR__ .'/../Views/entrerCode.php';  
     }
 
     if ($afficherPageFormateur == true) {
       include_once __DIR__ . '/../Views/Includes/header.php';
       include __DIR__ .'/../Views/accueilFormateur.php'; 
-    ?>
-
-
-<?php }
-  }
 }
+  }
+
 
 public function afficheFormulaireCreationApprenant()
 {
@@ -121,10 +116,54 @@ public function sauvegarderApprenant()
           $nomApprenant = $data['nomApprenant'];
           $prenomApprenant = $data['prenomApprenant'];
           $mailApprenant = $data['mailApprenant'];
-          // AJOUTER APPRENANT EN BDD
-          // LUI ENVOYER UN MAIL POUR QU'IL CREE UN MDP 
-          // LUI ASSIGNER L'ID DE LA PROMO EN COURS
+          $nvApprenant = new Utilisateur(null, $nomApprenant, $prenomApprenant, $mailApprenant, null, 2);
+          $utilisateurRepo = new UtilisateurRepository;
+          $apprenant = $utilisateurRepo->CreerUtilisateur($nvApprenant);
+          $utilisateurPromo = new UtilisateurPromo($apprenant->getId(), $_SESSION['promo']->id);
+          $utilisateurPromoRepo = new Utilisateur_promoRepository;
+          $utilisateurPromoRepo->CreerUtilisateurPromo($utilisateurPromo);
+          
+          $lien = "http://gestionapprenants/creationmdp?email=" . $mailApprenant;
+          $to  = $mailApprenant;
+          $subject = 'Creation d\'un mot de passe';
+          $message = 'Bravo vous êtes bien inscrit à la formation, veuillez
+          créer votre mot de passe en suivant le lien suivant:
+          <a href='. $lien .'>Cliquez ici</a> ';
+          $headers = 'From: elodie@gmail.com' . "\r\n" .
+            'Reply-To: elodie@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+      
+          $test = mail($to, $subject, $message, $headers);
+      
+          if ($test) {
+            echo 'Mail envoyé';
+          } else {
+            var_dump($test);
+          }
+        }
+        
+
+        }
+}
+
+public function creerMDP(){
+  $json_data = file_get_contents('php://input');
+
+      if (!empty($json_data)) {
+        $data = json_decode($json_data, true);
+        if ($data !== null) {
+          $mdpCree = $data['mdpCreation'];
+          $mdpCree2 = $data['mdpCreation2'];
+          $email = $data['email'];
+
+          $utilisateurRepo = new UtilisateurRepository;
+
+          if($mdpCree == $mdpCree2){
+            $mdp = password_hash($mdpCree, PASSWORD_DEFAULT);
+            $utilisateurRepo->creerMDP($email, $mdp);
+          }
 
         }}
 }
+
 }

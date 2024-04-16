@@ -2,10 +2,11 @@ let formulaireConnexion = document.getElementById("formConnexion");
 let boutonFormulaire = document.getElementById("boutonSubmit");
 let messageCo = document.getElementById("messageCo");
 
+if(boutonFormulaire){
 boutonFormulaire.addEventListener("click", function (event) {
   event.preventDefault();
   soumettreFormulaire();
-});
+});}
 
 function soumettreFormulaire() {
   let mailCo = document.getElementById("mailCo").value;
@@ -297,12 +298,7 @@ function affichePageCreationApprenant() {
   };
 }
 
-// let boutonSauvegarderApprenant = document.getElementById("sauvegarderApprenant");
-// boutonSauvegarderApprenant.addEventListener("click", (e) => {
-//   e.preventDefault();
-//   sauvegarderApprenant();
-// });
-// MARCHE PAS A PARTIR DE LA
+
 
 function sauvegarderApprenant() {
   let nomApprenant = document.getElementById("nomApprenant").value;
@@ -315,6 +311,37 @@ function sauvegarderApprenant() {
     nomApprenant: nomApprenant,
     prenomApprenant: prenomApprenant,
     mailApprenant: mailApprenant,
+  };
+  xhr.send(JSON.stringify(formData));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;}}}
+}
+
+
+// S'ASSURER QUE LE BOUTON EXISTE //
+// RECUPERER L'ADRESSE MAIL ??!! 
+let boutonCreationMDP = document.getElementById("boutonCreationMDP");
+boutonCreationMDP.addEventListener("click", function (event) {
+  event.preventDefault();
+  creerMDP();
+});
+
+
+function creerMDP(){
+  let mdpCreation = document.getElementById("mdpCreation").value;
+  let mdpCreation2 = document.getElementById("mdpCreation2").value;
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get('email');
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", HOME_URL + "creerMDP", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let formData = {
+    mdpCreation: mdpCreation,
+    mdpCreation2: mdpCreation2,
+    email:email
   };
   xhr.send(JSON.stringify(formData));
   xhr.onreadystatechange = function () {

@@ -15,7 +15,7 @@
       // define('HOME_URL', '/elodiel/gestionApprenants/public/');
 
       // EN LOCAL :
-      define('HOME_URL', '/');
+      define('HOME_URL', 'http://gestionapprenants/');
       
       // Ne pas toucher :
       

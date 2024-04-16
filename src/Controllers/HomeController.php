@@ -24,6 +24,12 @@ class HomeController
     exit();
   }
 
+  public function affichePageCreationMDP()
+  {
+    $this->render("creationMdp");
+    exit(); 
+  }
+
 
   public function page404(): void
   {

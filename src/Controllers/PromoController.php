@@ -71,6 +71,7 @@ class PromoController
         $promoRepo = new PromoRepository;
         $idDeLaPromoAAfficher = $data['idDeLaPromoAAfficher'];
         $promo = $promoRepo->getPromoById($idDeLaPromoAAfficher);
+        $_SESSION['promo'] = $promo;
         $apprenants = $promoRepo->getAllApprenantsByIdPromo($idDeLaPromoAAfficher);  
         include __DIR__ .'/../Views/tableauApprenants.php'; 
 
