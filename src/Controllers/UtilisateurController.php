@@ -8,6 +8,7 @@ use src\Models\Utilisateur;
 use src\Models\UtilisateurPromo;
 use src\Repositories\CoursRepository;
 use src\Repositories\PromoRepository;
+use src\Repositories\Utilisateur_coursRepository;
 use src\Repositories\Utilisateur_promoRepository;
 use src\Repositories\UtilisateurRepository;
 use src\Services\Reponse;
@@ -166,4 +167,21 @@ public function creerMDP(){
         }}
 }
 
+public function supprimeApprenant(){
+  $json_data = file_get_contents('php://input');
+
+  if (!empty($json_data)) {
+    $data = json_decode($json_data, true);
+    if ($data !== null) {
+      $idDeLApprenantASupprimer = $data['idDeLApprenantASupprimer'];
+      $utilisateurRepo = new UtilisateurRepository;
+      $utilisateurPromoRepo = new Utilisateur_promoRepository;
+      $utilisateurCoursRepo = new Utilisateur_coursRepository;
+      $utilisateurRepo->supprimeUtilisateurById($idDeLApprenantASupprimer);
+      $utilisateurPromoRepo->supprimeUtilisateurPromoById($idDeLApprenantASupprimer);
+      $utilisateurCoursRepo->supprimeUtilisateurCoursById($idDeLApprenantASupprimer);
+      // RENVOYER SUR PAGE ACCUEIL 
+      //VERIFIER SI CA MARCHE
+    }}
+}
 }

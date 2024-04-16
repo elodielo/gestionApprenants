@@ -70,8 +70,14 @@ class UtilisateurRepository
         [':mdp' => $mdp,
         ':mail' => $mail]
       );
-    
-  }
+      }
+
+      public function supprimeUtilisateurById($idUtilisateur)
+      {
+        $sql = "DELETE FROM gest_utilisateur WHERE id = :id";
+        $query = $this->DB->prepare($sql);
+        $query->execute(['id' => $idUtilisateur]);
+      }
 
   public function getUtilisateurByMailEtMdp($mail, $mdp)
   {

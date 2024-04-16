@@ -1,0 +1,13 @@
+<?php
+        // lors de la mise en open source, remplacer les infos concernant la base de données.
+        
+        define('DB_HOST', 'localhost');
+        define('DB_NAME', 'gestionapprenants');
+        define('DB_USER', 'gestionApprenants');
+        define('DB_PWD', 'gestion123');
+        
+        define('HOME_URL', 'http://gestionapprenants/');
+
+        // Ne pas toucher :
+        
+        define('DB_INITIALIZED', TRUE);

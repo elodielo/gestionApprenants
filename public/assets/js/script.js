@@ -2,11 +2,12 @@ let formulaireConnexion = document.getElementById("formConnexion");
 let boutonFormulaire = document.getElementById("boutonSubmit");
 let messageCo = document.getElementById("messageCo");
 
-if(boutonFormulaire){
-boutonFormulaire.addEventListener("click", function (event) {
-  event.preventDefault();
-  soumettreFormulaire();
-});}
+if (boutonFormulaire) {
+  boutonFormulaire.addEventListener("click", function (event) {
+    event.preventDefault();
+    soumettreFormulaire();
+  });
+}
 
 function soumettreFormulaire() {
   let mailCo = document.getElementById("mailCo").value;
@@ -233,6 +234,15 @@ function voirPromo() {
       if (xhr.status === 200) {
         let response = xhr.responseText;
         document.body.innerHTML = response;
+        let boutonsSupprimerApprenant = document.querySelectorAll(
+          ".supprimerApprenant"
+        );
+        boutonsSupprimerApprenant.forEach(function (boutonSupprimerApprenant) {
+          boutonSupprimerApprenant.addEventListener(
+            "click",
+            supprimerApprenant
+          );
+        });
         let boutonAjoutApprenant = document.getElementById(
           "boutonAjoutApprenant"
         );
@@ -298,8 +308,6 @@ function affichePageCreationApprenant() {
   };
 }
 
-
-
 function sauvegarderApprenant() {
   let nomApprenant = document.getElementById("nomApprenant").value;
   let prenomApprenant = document.getElementById("prenomApprenant").value;
@@ -317,36 +325,64 @@ function sauvegarderApprenant() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         let response = xhr.responseText;
-        document.body.innerHTML = response;}}}
+        document.body.innerHTML = response;
+      }
+    }
+  };
 }
 
-
 // S'ASSURER QUE LE BOUTON EXISTE //
-// RECUPERER L'ADRESSE MAIL ??!! 
+// RECUPERER L'ADRESSE MAIL ??!!
 let boutonCreationMDP = document.getElementById("boutonCreationMDP");
 boutonCreationMDP.addEventListener("click", function (event) {
   event.preventDefault();
   creerMDP();
 });
 
-
-function creerMDP(){
+function creerMDP() {
   let mdpCreation = document.getElementById("mdpCreation").value;
   let mdpCreation2 = document.getElementById("mdpCreation2").value;
   const params = new URLSearchParams(window.location.search);
-  const email = params.get('email');
+  const email = params.get("email");
   let xhr = new XMLHttpRequest();
   xhr.open("POST", HOME_URL + "creerMDP", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   let formData = {
     mdpCreation: mdpCreation,
     mdpCreation2: mdpCreation2,
-    email:email
+    email: email,
   };
   xhr.send(JSON.stringify(formData));
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         let response = xhr.responseText;
-        document.body.innerHTML = response;}}}
+        document.body.innerHTML = response;
+        window.location.href = HOME_URL;
+      }
+    }
+  };
+}
+
+// let boutonsSupprimerApprenant =
+// document.querySelectorAll(".supprimerApprenant");
+// boutonsSupprimerApprenant.forEach(function (boutonSupprimerApprenant) {
+//   boutonSupprimerApprenant.addEventListener("click", supprimerApprenant);
+// });
+
+function supprimerApprenant() {
+  let idDeLApprenantASupprimer = this.getAttribute("data-supprimeAp-id");
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", HOME_URL + "supprimerApprenantChoisi", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let formData = {
+    idDeLApprenantASupprimer: idDeLApprenantASupprimer,
+  };
+  xhr.send(JSON.stringify(formData));
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let response = xhr.responseText;
+        document.body.innerHTML = response;
+      }}}
 }

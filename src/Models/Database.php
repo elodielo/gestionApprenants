@@ -39,7 +39,7 @@ final class Database
         }
 
         try {
-            $sql = file_get_contents(__DIR__ . "../Migrations/migration.sql");
+            $sql = file_get_contents(__DIR__ . "/../Migrations/migration.sql");
             $this->DB->query($sql);
 
 
@@ -54,8 +54,8 @@ final class Database
     function DBexiste()
     {
 
-        $existe = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' LIKE \'fest_client\'')->fetch();
-        if ($existe !== false && $existe[0] == "fest_client") {
+        $existe = $this->DB->query('SHOW TABLES FROM ' . DB_NAME . ' LIKE \'gest_utilisateur\'')->fetch();
+        if ($existe !== false && $existe[0] == "gest_utilisateur") {
             return true;
         } else {
             return false;
@@ -75,6 +75,8 @@ final class Database
         define('DB_USER', '" . DB_USER . "');
         define('DB_PWD', '" . DB_PWD . "');
         
+        define('HOME_URL', '" . HOME_URL . "');
+
         // Ne pas toucher :
         
         define('DB_INITIALIZED', TRUE);";

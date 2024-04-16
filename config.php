@@ -19,4 +19,4 @@
       
       // Ne pas toucher :
       
-      define('DB_INITIALIZED', TRUE);
+      define('DB_INITIALIZED', FALSE);    

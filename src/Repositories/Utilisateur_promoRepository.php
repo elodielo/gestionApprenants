@@ -41,6 +41,14 @@ class Utilisateur_promoRepository
     return $utilisateurPromo;
   }
 
+  public function supprimeUtilisateurPromoById($idUtilisateur)
+  {
+    $sql = "DELETE FROM utilisateur_promo WHERE id_utilisateur = :id_utilisateur";
+    $query = $this->DB->prepare($sql);
+    $query->execute(['id_utilisateur' => $idUtilisateur]);
+  }
+
+
   public function getUtilisateurById($id)
   {
     $sql = "SELECT * FROM gest_utilisateur WHERE ID=:id";

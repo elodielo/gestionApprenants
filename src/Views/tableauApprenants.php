@@ -37,10 +37,12 @@ include_once __DIR__ . '/Includes/header.php';
           <th scope="row"><?php echo $apprenant->nom ?></th>
           <td><?php echo $apprenant->prenom ?></td>
           <td><?php echo $apprenant->mail ?></td>
-          <td> oui </td>
+          <td> <?php
+          if($apprenant->mdp == null){echo "non";}
+          else{echo "oui";} ?> </td>
           <td class="d-flex justify-content-evenly">
-          <a href="#" class="editerApprenant link-unstyled" data-editeAp-id = <?php echo $promo->id?> >Editer</a>
-          <a href="#" class="supprimerApprenant link-unstyled" data-supprimeAp-id = <?php echo $promo->id?>  >Supprimer</a></td>
+          <a href="#" class="editerApprenant link-unstyled" data-editeAp-id = <?php echo $apprenant->id?> >Editer</a>
+          <a href="#" class="supprimerApprenant link-unstyled" data-supprimeAp-id = <?php echo $apprenant->id?>  >Supprimer</a></td>
         </tr>
       </tbody>
       <?php } ?>

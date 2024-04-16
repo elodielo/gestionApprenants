@@ -62,6 +62,10 @@ switch ($route) {
         $PromoController->retourPageAccueilFormateur();
         break;
 
+    case HOME_URL . 'supprimerApprenantChoisi':
+        $UtilisateurController->supprimeApprenant();
+        break;
+
     case HOME_URL . 'afficheFormulaireCreationApprenant':
         $UtilisateurController->afficheFormulaireCreationApprenant();
         break;
@@ -81,7 +85,6 @@ switch ($route) {
     
        case HOME_URL . 'creerMDP':
         $UtilisateurController->creerMDP();
-        $HomeController->affichePageAccueil();
         // BUG QUAND ENSUITE RECONNEXION
         break;   
 
