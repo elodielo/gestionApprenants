@@ -66,16 +66,14 @@ class CoursRepository
 
   public function definitCodeAleatoire($id)
   {
-    $sql ="UPDATE gest_cours SET codeCours =:codeCours WHERE id=:id";
+    $sql = "UPDATE gest_cours SET codeCours =:codeCours WHERE id=:id";
     $statement = $this->DB->prepare($sql);
     $codeAleatoire = sprintf('%05d', random_int(10000, 99999));
     $statement->execute(
-      [':id' => $id,
-      ':codeCours' => $codeAleatoire]
+      [
+        ':id' => $id,
+        ':codeCours' => $codeAleatoire
+      ]
     );
   }
-
-
-
 }
-  

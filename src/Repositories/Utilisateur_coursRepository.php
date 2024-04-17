@@ -51,13 +51,11 @@ class Utilisateur_coursRepository
     return $retour;
   }
 
-  function supprimeUtilisateurCoursById($idUtilisateur){
-    {
+  function supprimeUtilisateurCoursById($idUtilisateur)
+  { {
       $sql = "DELETE FROM utilisateur_cours WHERE id_utilisateur = :id_utilisateur";
       $query = $this->DB->prepare($sql);
       $query->execute(['id_utilisateur' => $idUtilisateur]);
     }
   }
-
 }
-  

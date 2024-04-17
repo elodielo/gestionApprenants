@@ -60,23 +60,23 @@ class Utilisateur_promoRepository
 
   public function getUtilisateurByMailEtMdp($mail, $mdp)
   {
-    try{
+    try {
       $sql = "SELECT * FROM gest_utilisateur WHERE mail=:mail";
       $statement = $this->DB->prepare($sql);
       $statement->execute([':mail' => $mail]);
-    $utilisateur = $statement->fetch(PDO::FETCH_ASSOC);
+      $utilisateur = $statement->fetch(PDO::FETCH_ASSOC);
       if ($utilisateur) {
-          if (password_verify($mdp, $utilisateur['mdp'])) {
-              $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
-              return $newUtilisateur;
-          } else {
-              return false;
-          }
-      } else {
+        if (password_verify($mdp, $utilisateur['mdp'])) {
+          $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
+          return $newUtilisateur;
+        } else {
           return false;
-      } 
-  }catch (PDOException $e) {
-          echo "Erreur lors de la préparation de la requête : " . $e->getMessage();
+        }
+      } else {
+        return false;
       }
-}}
-  
+    } catch (PDOException $e) {
+      echo "Erreur lors de la préparation de la requête : " . $e->getMessage();
+    }
+  }
+}

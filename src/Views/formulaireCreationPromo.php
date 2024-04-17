@@ -13,9 +13,9 @@ include_once __DIR__ . '/Includes/header.php';
 <div id="containerConnexion" class="w-50 p-3 position-absolute top-50 start-50 translate-middle bg-light">
   <h2> Création d'une promotion </h2>
   <form id="formCreationPromotion">
-  <div class="mb-3">
+    <div class="mb-3">
       <label for="nomPromotion" class="form-label">Nom de la promotion</label>
-      <input type="text" class="form-control" id="nomPromotion" >
+      <input type="text" class="form-control" id="nomPromotion">
     </div>
     <div class="mb-3">
       <label for="dateDebutPromo" class="form-label">Date de début</label>
@@ -27,14 +27,14 @@ include_once __DIR__ . '/Includes/header.php';
     </div>
     <div class="mb-3">
       <label for="placesDisposPromo" class="form-label">places disponibles</label>
-    <input type="email" class="form-control" id="placesDisposPromo" aria-describedby="emailHelp">
+      <input type="email" class="form-control" id="placesDisposPromo" aria-describedby="emailHelp">
     </div>
 
     <div class="d-flex justify-content-between">
-    <button id="retourCreationPromo" class="btn btn-primary"> Retour </button>
-    <button id="validerCreationPromo" class="btn btn-primary"> Sauvegarder </button>
+      <button id="retourCreationPromo" class="btn btn-primary"> Retour </button>
+      <button id="validerCreationPromo" class="btn btn-primary"> Sauvegarder </button>
     </div>
-    
+
   </form>
 </div>
 

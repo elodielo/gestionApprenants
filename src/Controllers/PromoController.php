@@ -17,26 +17,27 @@ class PromoController
 
   public function affichePageCreationPromo()
   {
-    include __DIR__ .'/../Views/formulaireCreationPromo.php'; 
+    include __DIR__ . '/../Views/formulaireCreationPromo.php';
   }
 
-  public function creationPromotion(){
+  public function creationPromotion()
+  {
     $json_data = file_get_contents('php://input');
 
     if (!empty($json_data)) {
       $data = json_decode($json_data, true);
       if ($data !== null) {
-      $nomPromotion = $data['nomPromotion'];
-      $dateDebutPromo = $data['dateDebutPromo'];
-      $dateFinPromo = $data['dateFinPromo'];
-      $placesDisposPromo = $data['placesDisposPromo'];
-    
-    $nvPromo = new Promo(null, $nomPromotion,$dateDebutPromo, $dateFinPromo, $placesDisposPromo);
-    $promoRepo = new PromoRepository;
-    $promoRepo->CreerPromo($nvPromo);
+        $nomPromotion = $data['nomPromotion'];
+        $dateDebutPromo = $data['dateDebutPromo'];
+        $dateFinPromo = $data['dateFinPromo'];
+        $placesDisposPromo = $data['placesDisposPromo'];
 
-    // include __DIR__ .'/../Views/accueilFormateur.php'; 
-    
+        $nvPromo = new Promo(null, $nomPromotion, $dateDebutPromo, $dateFinPromo, $placesDisposPromo);
+        $promoRepo = new PromoRepository;
+        $promoRepo->CreerPromo($nvPromo);
+
+        // include __DIR__ .'/../Views/accueilFormateur.php'; 
+
       }
     }
   }
@@ -53,13 +54,16 @@ class PromoController
     foreach ($cours as $cour) {
       if ($cour->dateJour == $dateActuelleFormatee) {
         if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
-          $courAct = $cour;}}}
-     $promo = $promoRepo->getPromoByIdCours($courAct->id);
-     $promos = $promoRepo->getAllPromos();
-     $codeCours = $courAct->codeCours;
+          $courAct = $cour;
+        }
+      }
+    }
+    $promo = $promoRepo->getPromoByIdCours($courAct->id);
+    $promos = $promoRepo->getAllPromos();
+    $codeCours = $courAct->codeCours;
 
-     include_once __DIR__ . '/../Views/Includes/header.php';
-     include __DIR__ .'/../Views/formateurAvecCode.php'; 
+    include_once __DIR__ . '/../Views/Includes/header.php';
+    include __DIR__ . '/../Views/formateurAvecCode.php';
   }
 
   public function afficherPromoChoisie()
@@ -74,11 +78,11 @@ class PromoController
         $idDeLaPromoAAfficher = $data['idDeLaPromoAAfficher'];
         $promo = $promoRepo->getPromoById($idDeLaPromoAAfficher);
         $_SESSION['promo'] = $promo;
-        $apprenants = $promoRepo->getAllApprenantsByIdPromo($idDeLaPromoAAfficher);  
-        $apprenantsEnRetard = $utilisateurRepo->recupererApprenantsEnRetard();
-        include __DIR__ .'/../Views/tableauApprenants.php'; 
-
-      }}
+        $apprenants = $promoRepo->getAllApprenantsByIdPromo($idDeLaPromoAAfficher);
+        $apprenantsEnRetard = $utilisateurRepo->recupererApprenantsEnRetardByIdPromo($idDeLaPromoAAfficher);
+        include __DIR__ . '/../Views/tableauApprenants.php';
+      }
+    }
   }
 
   public function supprimerPromoChoisie()
@@ -92,7 +96,6 @@ class PromoController
         $idDeLaPromoASupprimer = $data['idDeLaPromoASupprimer'];
         $promoRepo->supprimePromoById($idDeLaPromoASupprimer);
       }
-  }
-
+    }
   }
 }

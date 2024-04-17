@@ -27,10 +27,11 @@ class HomeController
   public function affichePageCreationMDP()
   {
     $this->render("creationMdp");
-    exit(); 
+    exit();
   }
 
-  public function deconnexion(){
+  public function deconnexion()
+  {
     session_destroy();
     header('location:' . HOME_URL);
     die();

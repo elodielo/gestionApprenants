@@ -27,41 +27,40 @@ class CoursController
       if ($data !== null) {
         $IdCours = $data['IdCours'];
 
-            $dateActuelle = new DateTime('now', new DateTimeZone('UTC'));
-            $dateActuelle->setTimezone(new DateTimeZone('Europe/Paris'));
-            $dateActuelleFormatee = $dateActuelle->format('Y-m-d');
-            $heureFormatee = $dateActuelle->format('H:i:s');
-            $promoRepo = new PromoRepository;
-            $coursRepo = new CoursRepository;
-            $cours = $coursRepo->getAllCours();
-            foreach ($cours as $cour) {
-              if ($cour->dateJour == $dateActuelleFormatee) {
-                if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
-                  $courAct = $cour;
-                  if($cour->codeCours !== null){
-                    $codeCours = $cour->codeCours;
-                    
-                  } else{
-                    $coursRepo->definitCodeAleatoire($cour->id);
-                   $codeStd = $coursRepo->getCodeCoursById($cour->id);
-                   $codeCours = $codeStd->codeCours;
-                  }
-                } else {
-                  // echo ('pas de cours à cette heure') ;
-                }
+        $dateActuelle = new DateTime('now', new DateTimeZone('UTC'));
+        $dateActuelle->setTimezone(new DateTimeZone('Europe/Paris'));
+        $dateActuelleFormatee = $dateActuelle->format('Y-m-d');
+        $heureFormatee = $dateActuelle->format('H:i:s');
+        $promoRepo = new PromoRepository;
+        $coursRepo = new CoursRepository;
+        $cours = $coursRepo->getAllCours();
+        foreach ($cours as $cour) {
+          if ($cour->dateJour == $dateActuelleFormatee) {
+            if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
+              $courAct = $cour;
+              if ($cour->codeCours !== null) {
+                $codeCours = $cour->codeCours;
               } else {
-                // echo ('Pas de cours à cette date');
+                $coursRepo->definitCodeAleatoire($cour->id);
+                $codeStd = $coursRepo->getCodeCoursById($cour->id);
+                $codeCours = $codeStd->codeCours;
               }
+            } else {
+              // echo ('pas de cours à cette heure') ;
             }
+          } else {
+            // echo ('Pas de cours à cette date');
           }
         }
-        
-        $promo = $promoRepo->getPromoByIdCours($courAct->id);
-        $promos = $promoRepo->getAllPromos();
-        // AFFICHE 
-  include_once __DIR__ . '/../Views/Includes/header.php';
-  include __DIR__ .'/../Views/formateurAvecCode.php'; 
-  ?>
+      }
+    }
+
+    $promo = $promoRepo->getPromoByIdCours($courAct->id);
+    $promos = $promoRepo->getAllPromos();
+
+    include_once __DIR__ . '/../Views/Includes/header.php';
+    include __DIR__ . '/../Views/formateurAvecCode.php';
+?>
 
 
 <?php }
@@ -95,38 +94,34 @@ class CoursController
           }
         }
         $promo = $promoRepo->getPromoByIdCours($courAct->id);
-        if($courAct->codeCours == $codeTransmis ){
-          
+        if ($courAct->codeCours == $codeTransmis) {
+
           $idUtilisateurAct = $_SESSION['utilisateur']->getId();
-          include __DIR__ .'/../Views/ApprenantSignatureReccueillie.php';  
+          include __DIR__ . '/../Views/ApprenantSignatureReccueillie.php';
           $utilisateurAct = $utilisateurRepo->getUtilisateurById($idUtilisateurAct);
           $heureEnregistrement = $heureFormatee;
-$heureEnregistrement = DateTime::createFromFormat('H:i:s', $heureEnregistrement);
-$heureDebutCours = DateTime::createFromFormat('H:i:s', $courAct->heureDebut);
+          $heureEnregistrement = DateTime::createFromFormat('H:i:s', $heureEnregistrement);
+          $heureDebutCours = DateTime::createFromFormat('H:i:s', $courAct->heureDebut);
 
-if ($heureEnregistrement && $heureDebutCours) {
-    $diff = $heureEnregistrement->diff($heureDebutCours);
+          if ($heureEnregistrement && $heureDebutCours) {
+            $diff = $heureEnregistrement->diff($heureDebutCours);
 
-    $totalMinutes = ($diff->h * 60) + $diff->i;
-    if ($totalMinutes > 15) {
-        $statut = "retard";
-    } else {
-        $statut = "present";
-    }
-} else {
-    // Gérer le cas où la conversion échoue
-    // Par exemple, si le format de l'heure est incorrect
-    // ou si les valeurs sont null
-    // Vous pouvez afficher un message d'erreur ou prendre une autre action appropriée
-}
+            $totalMinutes = ($diff->h * 60) + $diff->i;
+            if ($totalMinutes > 15) {
+              $statut = "retard";
+            } else {
+              $statut = "present";
+            }
+          } else {
+            // Gérer le cas où la conversion échoue
+          }
 
           $UtilisateurCours = new UtilisateurCours($idUtilisateurAct, $courAct->id, $statut);
           $utilisateurCoursRepo->CreerUtilisateurCours($UtilisateurCours);
-
-      } else {
-        include __DIR__ .'/../Views/entrerCode.php';
+        } else {
+          include __DIR__ . '/../Views/entrerCode.php';
+        }
       }
-
-  }
     }
-}}
+  }
+}

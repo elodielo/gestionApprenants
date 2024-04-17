@@ -63,46 +63,57 @@ class UtilisateurRepository
     return $retour;
   }
 
-  public function creerMDP($mail, $mdp){
-      $sql ="UPDATE gest_utilisateur SET mdp =:mdp WHERE mail=:mail";
-      $statement = $this->DB->prepare($sql);
-      $statement->execute(
-        [':mdp' => $mdp,
-        ':mail' => $mail]
-      );
-      }
-
-  public function recupererApprenantsEnRetard(){
-    $sql = "SELECT * FROM gest_utilisateur JOIN utilisateur_cours ON gest_utilisateur.id = utilisateur_cours.id_utilisateur WHERE Statut='retard' ORDER BY gest_utilisateur.nom ASC";
-    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_OBJ);
+  public function creerMDP($mail, $mdp)
+  {
+    $sql = "UPDATE gest_utilisateur SET mdp =:mdp WHERE mail=:mail";
+    $statement = $this->DB->prepare($sql);
+    $statement->execute(
+      [
+        ':mdp' => $mdp,
+        ':mail' => $mail
+      ]
+    );
   }
 
-      public function supprimeUtilisateurById($idUtilisateur)
-      {
-        $sql = "DELETE FROM gest_utilisateur WHERE id = :id";
-        $query = $this->DB->prepare($sql);
-        $query->execute(['id' => $idUtilisateur]);
-      }
+  public function recupererApprenantsEnRetardByIdPromo($idPromo)
+  {
+    $sql = "SELECT *
+    FROM gest_utilisateur
+    JOIN utilisateur_cours ON gest_utilisateur.id = utilisateur_cours.id_utilisateur
+    JOIN utilisateur_promo ON gest_utilisateur.id = utilisateur_promo.id_utilisateur
+    WHERE Statut = 'retard' AND utilisateur_promo.id_promo =:idPromo  ORDER BY gest_utilisateur.nom ASC ";
+      $statement = $this->DB->prepare($sql);
+      $statement->execute([':idPromo' => $idPromo]);
+      $retour = $statement->fetchAll(PDO::FETCH_OBJ);
+      return $retour;
+  }
+
+  public function supprimeUtilisateurById($idUtilisateur)
+  {
+    $sql = "DELETE FROM gest_utilisateur WHERE id = :id";
+    $query = $this->DB->prepare($sql);
+    $query->execute(['id' => $idUtilisateur]);
+  }
 
   public function getUtilisateurByMailEtMdp($mail, $mdp)
   {
-    try{
+    try {
       $sql = "SELECT * FROM gest_utilisateur WHERE mail=:mail";
       $statement = $this->DB->prepare($sql);
       $statement->execute([':mail' => $mail]);
-    $utilisateur = $statement->fetch(PDO::FETCH_ASSOC);
+      $utilisateur = $statement->fetch(PDO::FETCH_ASSOC);
       if ($utilisateur) {
-          if (password_verify($mdp, $utilisateur['mdp'])) {
-              $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
-              return $newUtilisateur;
-          } else {
-              return false;
-          }
-      } else {
+        if (password_verify($mdp, $utilisateur['mdp'])) {
+          $newUtilisateur = new Utilisateur($utilisateur['id'], $utilisateur['nom'], $utilisateur['prenom'], $utilisateur['mail'], $utilisateur['mdp'], $utilisateur['id_role']);
+          return $newUtilisateur;
+        } else {
           return false;
-      } 
-  }catch (PDOException $e) {
-          echo "Erreur lors de la préparation de la requête : " . $e->getMessage();
+        }
+      } else {
+        return false;
       }
-}}
-  
+    } catch (PDOException $e) {
+      echo "Erreur lors de la préparation de la requête : " . $e->getMessage();
+    }
+  }
+}

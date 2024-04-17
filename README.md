@@ -31,4 +31,15 @@ Et pour la version apprenant:
 mail : elodielo20@gmal.com
 mdp : elo
 
+Il est sinon possible de créer les apprenants à partir du formateur.
+Attention : si le cours n'existe pas à l'horaire de la consultation, le rajouter manuellement en base de données.
+
 ## Site en ligne accessible à cette adresse:
+
+https://simplondevgrenoble.nohost.me/elodiel/gestionApprenants/public/
+
+## Améliorations :
+ - Pouvoir ajouter des cours ou gérer les éventualités si cours inexistant;
+ - Envoyer un mail si 3 retards
+ - Editer un apprenant ou une promo
+ - Ajouter/supprimer un retard ou une absence
