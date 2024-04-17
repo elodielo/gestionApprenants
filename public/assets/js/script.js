@@ -105,8 +105,6 @@ function validationPresenceFormateur() {
       }
     }
   };
-
-  // CREER REQUETE AJAX - ENVOI SUR ROUTER - AFFICHE VUE AVEC LE CODE
 }
 
 function validationPresenceApprenant() {
@@ -169,27 +167,36 @@ function creerPromo() {
   let dateFinPromo = document.getElementById("dateFinPromo").value;
   let placesDisposPromo = document.getElementById("placesDisposPromo").value;
 
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", HOME_URL + "creationPromotion", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  let formData = {
-    nomPromotion: nomPromotion,
-    dateDebutPromo: dateDebutPromo,
-    dateFinPromo: dateFinPromo,
-    placesDisposPromo: placesDisposPromo,
-  };
-  xhr.send(JSON.stringify(formData));
+  if (
+    nomPromotion != "" &&
+    dateDebutPromo != "" &&
+    dateFinPromo &&
+    placesDisposPromo != ""
+  ) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", HOME_URL + "creationPromotion", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let formData = {
+      nomPromotion: nomPromotion,
+      dateDebutPromo: dateDebutPromo,
+      dateFinPromo: dateFinPromo,
+      placesDisposPromo: placesDisposPromo,
+    };
+    xhr.send(JSON.stringify(formData));
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        // let response = JSON.parse(xhr.responseText);
-        let response = xhr.responseText;
-        document.body.innerHTML = response;
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // let response = JSON.parse(xhr.responseText);
+          let response = xhr.responseText;
+          document.body.innerHTML = response;
+        }
+      } else {
       }
-    } else {
-    }
-  };
+    };
+  } else {
+    alert("veuillez remplir les champs");
+  }
 }
 
 function retourPageAccueilFormateur() {
@@ -269,6 +276,7 @@ function supprimerPromo() {
       if (xhr.status === 200) {
         let response = xhr.responseText;
         document.body.innerHTML = response;
+        let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
         if (boutonAjoutPromo) {
           boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
         }
@@ -312,27 +320,29 @@ function sauvegarderApprenant() {
   let nomApprenant = document.getElementById("nomApprenant").value;
   let prenomApprenant = document.getElementById("prenomApprenant").value;
   let mailApprenant = document.getElementById("mailApprenant").value;
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", HOME_URL + "sauvegarderApprenant", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  let formData = {
-    nomApprenant: nomApprenant,
-    prenomApprenant: prenomApprenant,
-    mailApprenant: mailApprenant,
-  };
-  xhr.send(JSON.stringify(formData));
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        let response = xhr.responseText;
-        document.body.innerHTML = response;
+  if (nomApprenant != "" && prenomApprenant != "" && mailApprenant != "") {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", HOME_URL + "sauvegarderApprenant", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let formData = {
+      nomApprenant: nomApprenant,
+      prenomApprenant: prenomApprenant,
+      mailApprenant: mailApprenant,
+    };
+    xhr.send(JSON.stringify(formData));
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          let response = xhr.responseText;
+          document.body.innerHTML = response;
+        }
       }
-    }
-  };
+    };
+  } else {
+    alert("Veuillez compléter les champs");
+  }
 }
 
-// S'ASSURER QUE LE BOUTON EXISTE //
-// RECUPERER L'ADRESSE MAIL ??!!
 let boutonCreationMDP = document.getElementById("boutonCreationMDP");
 boutonCreationMDP.addEventListener("click", function (event) {
   event.preventDefault();
@@ -342,33 +352,35 @@ boutonCreationMDP.addEventListener("click", function (event) {
 function creerMDP() {
   let mdpCreation = document.getElementById("mdpCreation").value;
   let mdpCreation2 = document.getElementById("mdpCreation2").value;
-  const params = new URLSearchParams(window.location.search);
-  const email = params.get("email");
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", HOME_URL + "creerMDP", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  let formData = {
-    mdpCreation: mdpCreation,
-    mdpCreation2: mdpCreation2,
-    email: email,
-  };
-  xhr.send(JSON.stringify(formData));
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        let response = xhr.responseText;
-        document.body.innerHTML = response;
-        window.location.href = HOME_URL;
-      }
+  if (mdpCreation != "") {
+    if (mdpCreation == mdpCreation2) {
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email");
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", HOME_URL + "creerMDP", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      let formData = {
+        mdpCreation: mdpCreation,
+        mdpCreation2: mdpCreation2,
+        email: email,
+      };
+      xhr.send(JSON.stringify(formData));
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            let response = xhr.responseText;
+            document.body.innerHTML = response;
+            window.location.href = HOME_URL;
+          }
+        }
+      };
+    } else {
+      alert("les mots de passe ne correspondent pas");
     }
-  };
+  } else {
+    alert("les champs sont vides");
+  }
 }
-
-// let boutonsSupprimerApprenant =
-// document.querySelectorAll(".supprimerApprenant");
-// boutonsSupprimerApprenant.forEach(function (boutonSupprimerApprenant) {
-//   boutonSupprimerApprenant.addEventListener("click", supprimerApprenant);
-// });
 
 function supprimerApprenant() {
   let idDeLApprenantASupprimer = this.getAttribute("data-supprimeAp-id");
@@ -384,5 +396,7 @@ function supprimerApprenant() {
       if (xhr.status === 200) {
         let response = xhr.responseText;
         document.body.innerHTML = response;
-      }}}
+      }
+    }
+  };
 }

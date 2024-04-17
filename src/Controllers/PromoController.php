@@ -7,6 +7,7 @@ use DateTimeZone;
 use src\Models\Promo;
 use src\Repositories\CoursRepository;
 use src\Repositories\PromoRepository;
+use src\Repositories\UtilisateurRepository;
 use src\Services\Reponse;
 
 class PromoController
@@ -69,10 +70,12 @@ class PromoController
       $data = json_decode($json_data, true);
       if ($data !== null) {
         $promoRepo = new PromoRepository;
+        $utilisateurRepo = new UtilisateurRepository;
         $idDeLaPromoAAfficher = $data['idDeLaPromoAAfficher'];
         $promo = $promoRepo->getPromoById($idDeLaPromoAAfficher);
         $_SESSION['promo'] = $promo;
         $apprenants = $promoRepo->getAllApprenantsByIdPromo($idDeLaPromoAAfficher);  
+        $apprenantsEnRetard = $utilisateurRepo->recupererApprenantsEnRetard();
         include __DIR__ .'/../Views/tableauApprenants.php'; 
 
       }}

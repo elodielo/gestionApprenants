@@ -72,6 +72,11 @@ class UtilisateurRepository
       );
       }
 
+  public function recupererApprenantsEnRetard(){
+    $sql = "SELECT * FROM gest_utilisateur JOIN utilisateur_cours ON gest_utilisateur.id = utilisateur_cours.id_utilisateur WHERE Statut='retard' ORDER BY gest_utilisateur.nom ASC";
+    return  $this->DB->query($sql)->fetchAll(PDO::FETCH_OBJ);
+  }
+
       public function supprimeUtilisateurById($idUtilisateur)
       {
         $sql = "DELETE FROM gest_utilisateur WHERE id = :id";

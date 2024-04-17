@@ -180,8 +180,6 @@ public function supprimeApprenant(){
       $utilisateurRepo->supprimeUtilisateurById($idDeLApprenantASupprimer);
       $utilisateurPromoRepo->supprimeUtilisateurPromoById($idDeLApprenantASupprimer);
       $utilisateurCoursRepo->supprimeUtilisateurCoursById($idDeLApprenantASupprimer);
-      // RENVOYER SUR PAGE ACCUEIL 
-      //VERIFIER SI CA MARCHE
     }}
 }
 }
