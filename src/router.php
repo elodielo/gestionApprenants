@@ -79,6 +79,11 @@ switch ($route) {
         $DB->initialiserBDD();
         break;
     
+    
+    case HOME_URL. 'deconnexion':
+      $HomeController->deconnexion();
+      break;
+    
     case HOME_URL . 'creationmdp':
         $HomeController->affichePageCreationMDP();
         break;

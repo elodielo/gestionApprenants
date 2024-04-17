@@ -9,6 +9,7 @@ if (boutonFormulaire) {
   });
 }
 
+
 function soumettreFormulaire() {
   let mailCo = document.getElementById("mailCo").value;
   let mdpCo = document.getElementById("mdpCo").value;
@@ -24,7 +25,6 @@ function soumettreFormulaire() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        // let response = JSON.parse(xhr.responseText);
         let response = xhr.responseText;
         document.body.innerHTML = response;
         let validerPresenceFormateur = document.getElementById(
@@ -257,6 +257,19 @@ function voirPromo() {
           e.preventDefault();
           affichePageCreationApprenant();
         });
+        let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
+        if (boutonAjoutPromo) {
+          boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
+        }
+        let boutonsVoirPromo = document.querySelectorAll(".voirPromo");
+        boutonsVoirPromo.forEach(function (boutonVoirPromo) {
+          boutonVoirPromo.addEventListener("click", voirPromo);
+        });
+        let boutonsSupprimerPromo =
+          document.querySelectorAll(".supprimerPromo");
+        boutonsSupprimerPromo.forEach(function (boutonSupprimerPromo) {
+          boutonSupprimerPromo.addEventListener("click", supprimerPromo);
+        });
       }
     }
   };
@@ -310,6 +323,19 @@ function affichePageCreationApprenant() {
           e.preventDefault();
           sauvegarderApprenant();
         });
+        let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
+        if (boutonAjoutPromo) {
+          boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
+        }
+        let boutonsVoirPromo = document.querySelectorAll(".voirPromo");
+        boutonsVoirPromo.forEach(function (boutonVoirPromo) {
+          boutonVoirPromo.addEventListener("click", voirPromo);
+        });
+        let boutonsSupprimerPromo =
+          document.querySelectorAll(".supprimerPromo");
+        boutonsSupprimerPromo.forEach(function (boutonSupprimerPromo) {
+          boutonSupprimerPromo.addEventListener("click", supprimerPromo);
+        });
       } else {
       }
     }
@@ -335,6 +361,19 @@ function sauvegarderApprenant() {
         if (xhr.status === 200) {
           let response = xhr.responseText;
           document.body.innerHTML = response;
+          let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
+        if (boutonAjoutPromo) {
+          boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
+        }
+        let boutonsVoirPromo = document.querySelectorAll(".voirPromo");
+        boutonsVoirPromo.forEach(function (boutonVoirPromo) {
+          boutonVoirPromo.addEventListener("click", voirPromo);
+        });
+        let boutonsSupprimerPromo =
+          document.querySelectorAll(".supprimerPromo");
+        boutonsSupprimerPromo.forEach(function (boutonSupprimerPromo) {
+          boutonSupprimerPromo.addEventListener("click", supprimerPromo);
+        });
         }
       }
     };
@@ -396,7 +435,21 @@ function supprimerApprenant() {
       if (xhr.status === 200) {
         let response = xhr.responseText;
         document.body.innerHTML = response;
+        let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
+        if (boutonAjoutPromo) {
+          boutonAjoutPromo.addEventListener("click", affichePageCreationPromo);
+        }
+        let boutonsVoirPromo = document.querySelectorAll(".voirPromo");
+        boutonsVoirPromo.forEach(function (boutonVoirPromo) {
+          boutonVoirPromo.addEventListener("click", voirPromo);
+        });
+        let boutonsSupprimerPromo =
+          document.querySelectorAll(".supprimerPromo");
+        boutonsSupprimerPromo.forEach(function (boutonSupprimerPromo) {
+          boutonSupprimerPromo.addEventListener("click", supprimerPromo);
+        });
       }
     }
   };
 }
+

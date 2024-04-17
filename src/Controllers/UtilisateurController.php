@@ -22,7 +22,6 @@ class UtilisateurController
   {
     $afficherPageApprenant = false;
     $afficherPageFormateur = false;
-      // A METTRE DANS ROUTER
       $json_data = file_get_contents('php://input');
 
       if (!empty($json_data)) {
@@ -59,11 +58,22 @@ class UtilisateurController
                 if ($cour->dateJour == $dateActuelleFormatee) {
                   if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
                     $courAct = $cour;
- 
+                    
+                    if ($afficherPageApprenant == true) {
+                      include_once __DIR__ . '/../Views/Includes/header.php'; 
+                      include __DIR__ .'/../Views/entrerCode.php';  
+                    }
+                
+                    if ($afficherPageFormateur == true) {
+                      include_once __DIR__ . '/../Views/Includes/header.php';
+                      include __DIR__ .'/../Views/accueilFormateur.php'; 
+                }
                   } else {
+                  
                     // echo ('pas de cours à cette heure') ;
                   }
                 } else {
+                 
                   // echo ('Pas de cours à cette date');
                 }
               // }
@@ -90,15 +100,6 @@ class UtilisateurController
     }
 
 
-    if ($afficherPageApprenant == true) {
-      include_once __DIR__ . '/../Views/Includes/header.php'; 
-      include __DIR__ .'/../Views/entrerCode.php';  
-    }
-
-    if ($afficherPageFormateur == true) {
-      include_once __DIR__ . '/../Views/Includes/header.php';
-      include __DIR__ .'/../Views/accueilFormateur.php'; 
-}
   }
 
 

@@ -30,6 +30,12 @@ class HomeController
     exit(); 
   }
 
+  public function deconnexion(){
+    session_destroy();
+    header('location:' . HOME_URL);
+    die();
+  }
+
 
   public function page404(): void
   {
