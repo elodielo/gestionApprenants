@@ -36,7 +36,6 @@ class PromoController
         $promoRepo = new PromoRepository;
         $promoRepo->CreerPromo($nvPromo);
 
-        // include __DIR__ .'/../Views/accueilFormateur.php'; 
 
       }
     }

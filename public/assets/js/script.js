@@ -83,7 +83,6 @@ function validationPresenceFormateur() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        // let response = JSON.parse(xhr.responseText);
         let response = xhr.responseText;
         document.body.innerHTML = response;
         let boutonAjoutPromo = document.getElementById("boutonAjoutPromo");
@@ -118,7 +117,6 @@ function validationPresenceApprenant() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        // let response = JSON.parse(xhr.responseText);
         let response = xhr.responseText;
         document.body.innerHTML = response;
       } else {
@@ -186,7 +184,6 @@ function creerPromo() {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          // let response = JSON.parse(xhr.responseText);
           let response = xhr.responseText;
           document.body.innerHTML = response;
         }
