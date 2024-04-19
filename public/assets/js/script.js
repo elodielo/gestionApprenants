@@ -385,10 +385,11 @@ function sauvegarderApprenant() {
 }
 
 let boutonCreationMDP = document.getElementById("boutonCreationMDP");
+if(boutonCreationMDP){
 boutonCreationMDP.addEventListener("click", function (event) {
   event.preventDefault();
   creerMDP();
-});
+});}
 
 function creerMDP() {
   let mdpCreation = document.getElementById("mdpCreation").value;
@@ -453,4 +454,36 @@ function supprimerApprenant() {
       }
     }
   };
+}
+
+
+let sauvegarderCours = document.getElementById("sauvegarderCours");
+if(sauvegarderCours){
+  sauvegarderCours.addEventListener("click", function (event) {
+    event.preventDefault();
+    sauverCours();
+  });
+}
+
+function sauverCours(){
+  let dateDebutCours = document.getElementById("dateDebutCours").value;
+  let heureDebut = document.getElementById("heureDebut").value;
+  let heureFin = document.getElementById("heureFin").value;
+  let idPromo = document.getElementById("idPromo").value;
+  if (dateDebutCours != "" && heureDebut != "" && heureFin != "") {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", HOME_URL + "sauverCours", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    let formData = {
+      dateDebutCours: dateDebutCours,
+      heureDebut: heureDebut,
+      heureFin: heureFin,
+      idPromo:idPromo
+    };
+    xhr.send(JSON.stringify(formData));
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          let response = xhr.responseText;
+          document.body.innerHTML = response;}}}}
 }

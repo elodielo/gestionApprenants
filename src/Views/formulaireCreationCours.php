@@ -3,36 +3,28 @@
 include_once __DIR__ . '/Includes/header.php';
 ?>
 
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" >Promotion</a>
-  </li>
-</ul>
-
-
 <div id="containerConnexion" class="w-50 p-3 position-absolute top-50 start-50 translate-middle bg-light">
-  <h2> Création d'une promotion </h2>
+  <h2> Création d'un cours </h2>
   <form id="formCreationPromotion">
     <div class="mb-3">
-      <label for="nomPromotion" class="form-label">Nom de la promotion</label>
-      <input type="text" class="form-control" id="nomPromotion">
+      <label for="dateDebutCours" class="form-label">Date de début</label>
+      <input type="date" class="form-control" id="dateDebutCours">
     </div>
     <div class="mb-3">
-      <label for="dateDebutPromo" class="form-label">Date de début</label>
-      <input type="date" class="form-control" id="dateDebutPromo">
+      <label for="heureDebut" class="form-label">Heure debut</label>
+      <input type="time" class="form-control" id="heureDebut">
     </div>
     <div class="mb-3">
-      <label for="dateFinPromo" class="form-label">Date de fin</label>
-      <input type="date" class="form-control" id="dateFinPromo">
+      <label for="heureFin" class="form-label">Heure fin</label>
+      <input type="time" class="form-control" id="heureFin">
     </div>
     <div class="mb-3">
-      <label for="placesDisposPromo" class="form-label">places disponibles</label>
-      <input type="email" class="form-control" id="placesDisposPromo" aria-describedby="emailHelp">
+      <label for="idPromo" class="form-label">numéro promo</label>
+      <input type="number" class="form-control" id="idPromo" aria-describedby="emailHelp">
     </div>
 
     <div class="d-flex justify-content-between">
-      <button id="retourCreationPromo" class="btn btn-primary"> Retour </button>
-      <button id="validerCreationPromo" class="btn btn-primary"> Sauvegarder </button>
+      <button id="sauvegarderCours" class="btn btn-primary"> Sauvegarder </button>
     </div>
 
   </form>
@@ -42,10 +34,10 @@ include_once __DIR__ . '/Includes/header.php';
 <!-- 
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page">Accueil</a>
+          <a class="nav-link active" aria-current="page" >Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page">Promotions</a>
+          <a class="nav-link active" aria-current="page" >Promotions</a>
         </li>
       </ul>
 

@@ -3,7 +3,7 @@ include_once __DIR__ . '/../Views/Includes/header.php'; ?>
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+    <a class="nav-link active" aria-current="page" >Accueil</a>
   </li>
 </ul>
 

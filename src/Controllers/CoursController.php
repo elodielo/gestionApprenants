@@ -4,6 +4,7 @@ namespace src\Controllers;
 
 use DateTime;
 use DateTimeZone;
+use src\Models\Cours;
 use src\Models\Utilisateur;
 use src\Models\UtilisateurCours;
 use src\Repositories\CoursRepository;
@@ -124,4 +125,26 @@ class CoursController
       }
     }
   }
+
+
+ public function entrerCoursEnBDD(){
+  $json_data = file_get_contents('php://input');
+
+    if (!empty($json_data)) {
+      $data = json_decode($json_data, true);
+      if ($data !== null) {
+        $dateDebutCours = $data['dateDebutCours'];
+        $heureDebut = $data['heureDebut'];
+        $heureFin = $data['heureFin'];
+        $idPromo = $data['idPromo'];
+        
+        $cours = new Cours(null, $dateDebutCours, $heureDebut, $heureFin,null,$idPromo);
+        $coursRepo = new CoursRepository;
+        $coursCree = $coursRepo->CreerCours($cours);
+        header('location:' .HOME_URL);
+
+      }}
+ }
+
+
 }

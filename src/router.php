@@ -26,6 +26,14 @@ switch ($route) {
         $HomeController->affichePageCreation();
         break;
 
+        case HOME_URL . 'creationCours':
+            $HomeController->affichePageCreationCours();
+            break;
+    
+    case HOME_URL . 'sauverCours':
+        $CoursController->entrerCoursEnBDD();
+        break;
+
     case HOME_URL . 'connexion':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $UtilisateurController->traiterForm();}

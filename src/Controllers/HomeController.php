@@ -24,6 +24,13 @@ class HomeController
     exit();
   }
 
+  public function affichePageCreationCours()
+  {
+    $this->render("formulaireCreationCours");
+    exit();
+  }
+
+
   public function affichePageCreationMDP()
   {
     $this->render("creationMdp");
