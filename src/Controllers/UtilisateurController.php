@@ -55,18 +55,6 @@ class UtilisateurController
               if ($cour->dateJour == $dateActuelleFormatee) {
                 if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
                   $courAct = $cour;
-
-                  // if ($afficherPageApprenant == true) {
-                  //   var_dump('vooo');
-                  //    include_once __DIR__ . '/../Views/Includes/header.php';
-                  //   include __DIR__ . '/../Views/entrerCode.php';
-                  // }
-
-                  // if ($afficherPageFormateur == true) {
-
-                  //   include_once __DIR__ . '/../Views/Includes/header.php';
-                  //   include __DIR__ . '/../Views/accueilFormateur.php';
-                  // }
                 } else {
 
                   // echo ('pas de cours à cette heure') ;
