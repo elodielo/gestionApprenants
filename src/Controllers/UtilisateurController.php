@@ -56,15 +56,17 @@ class UtilisateurController
                 if ($cour->heureDebut < $heureFormatee && $heureFormatee < $cour->heureFin) {
                   $courAct = $cour;
 
-                  if ($afficherPageApprenant == true) {
-                    include_once __DIR__ . '/../Views/Includes/header.php';
-                    include __DIR__ . '/../Views/entrerCode.php';
-                  }
+                  // if ($afficherPageApprenant == true) {
+                  //   var_dump('vooo');
+                  //    include_once __DIR__ . '/../Views/Includes/header.php';
+                  //   include __DIR__ . '/../Views/entrerCode.php';
+                  // }
 
-                  if ($afficherPageFormateur == true) {
-                    include_once __DIR__ . '/../Views/Includes/header.php';
-                    include __DIR__ . '/../Views/accueilFormateur.php';
-                  }
+                  // if ($afficherPageFormateur == true) {
+
+                  //   include_once __DIR__ . '/../Views/Includes/header.php';
+                  //   include __DIR__ . '/../Views/accueilFormateur.php';
+                  // }
                 } else {
 
                   // echo ('pas de cours à cette heure') ;
@@ -95,9 +97,20 @@ class UtilisateurController
       echo json_encode(['error' => 'Méthode non autorisée']);
       exit;
     }
+
+
+    if ($afficherPageApprenant == true) {
+
+      include_once __DIR__ . '/../Views/Includes/header.php';
+      include __DIR__ . '/../Views/entrerCode.php';
+    }
+
+    if ($afficherPageFormateur == true) {
+
+      include_once __DIR__ . '/../Views/Includes/header.php';
+      include __DIR__ . '/../Views/accueilFormateur.php';
+    }
   }
-
-
   public function afficheFormulaireCreationApprenant()
   {
     include __DIR__ . '/../Views/creationApprenant.php';

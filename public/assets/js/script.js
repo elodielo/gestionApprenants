@@ -106,6 +106,7 @@ function validationPresenceFormateur() {
 }
 
 function validationPresenceApprenant() {
+  console.log("coucuou")
   let inputCode = inputValidationCodeApprenant.value;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", HOME_URL + "validationApprenant", true);
